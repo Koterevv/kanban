@@ -1,6 +1,5 @@
-import { Layout } from "@/components/Layout";
+import Providers from "@/components/DndProvider/Providers";
 import type { Metadata } from "next";
-import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,12 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-black-indigo text-font min-h-screen flex flex-col">
-        <Layout>
-          {children}
-        </Layout>
-      </body>
-    </html>
+    <section id="kanban-board" className="grow bg-gradient-to-br from-indigo from-20% to-light-purple to-100% p-5">
+      <Providers>{children}</Providers>
+    </section>
   );
 }

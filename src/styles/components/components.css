@@ -1,0 +1,13 @@
+@layer components{
+  .container {
+    @apply max-w-5xl mx-auto px-3;
+  }
+
+  .textarea {
+    @apply w-full bg-[#432b5e] resize-none p-2 rounded-lg mb-2;
+  }
+
+  .adding-button {
+    @apply p-2 flex items-center gap-1 justify-center rounded-xl transition-colors duration-200;
+  }
+}
