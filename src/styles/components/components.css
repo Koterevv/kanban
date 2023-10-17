@@ -10,4 +10,12 @@
   .adding-button {
     @apply p-2 flex items-center gap-1 justify-center rounded-xl transition-colors duration-200;
   }
+
+  .column {
+    @apply w-64 bg-deep-indigo/90 rounded-xl h-min p-1 overflow-auto mr-10;
+  }
+
+  .card {
+    @apply w-full bg-[#432b5e] resize-none p-2 rounded-lg mb-2;
+  }
 }

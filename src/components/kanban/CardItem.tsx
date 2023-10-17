@@ -22,12 +22,12 @@ export const CardItem = ({ card }: {card: Card}) => {
     transition,
   };
 
-  if (isDragging)
-    return (
-      <div className="opacity-30 w-full p-2 mb-2 rounded-lg border border-pink" ref={setNodeRef} style={style}>
-        <p className="overflow-hidden text-transparent">{card.title}</p>
-      </div>
-    );
+  // if (isDragging)
+  //   return (
+  //     <div className="opacity-30 w-full p-2 mb-2 rounded-lg border border-pink" ref={setNodeRef} style={style}>
+  //       <p className="overflow-hidden text-transparent">{card.title}</p>
+  //     </div>
+  //   );
 
   return (
     <div
@@ -35,7 +35,7 @@ export const CardItem = ({ card }: {card: Card}) => {
       style={style}
       {...attributes}
       {...listeners}
-      className="w-full bg-[#432b5e] resize-none p-2 rounded-lg mb-2"
+      className={isDragging ? "card opacity-40 border border-pink" : "card"}
     >
       <p className="overflow-hidden">{card.title}</p>
     </div>

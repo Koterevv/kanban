@@ -42,15 +42,15 @@ export const ColumnItem: FC<ColumnItemProps> = ({
     transition,
   };
 
-  if (isDragging) {
-    return (
-      <li
-        ref={setNodeRef}
-        style={style}
-        className="w-64 p-2 bg-black rounded-xl opacity-60 border border-rose-500"
-      ></li>
-    );
-  }
+  // if (isDragging) {
+  //   return (
+  //     <li
+  //       ref={setNodeRef}
+  //       style={style}
+  //       className="w-64 p-2 bg-black rounded-xl opacity-60 border border-rose-500 mr-10"
+  //     ></li>
+  //   );
+  // }
 
   return (
     <li
@@ -58,7 +58,7 @@ export const ColumnItem: FC<ColumnItemProps> = ({
       style={style}
       {...attributes}
       {...listeners}
-      className="w-64 bg-deep-indigo/90 rounded-xl h-min p-1 overflow-auto"
+      className={isDragging ? "column opacity-60" : "column"}
       // className="w-64 bg-gray-900 rounded-xl h-96 p-2 cursor-auto"
     >
       <div className="p-2">

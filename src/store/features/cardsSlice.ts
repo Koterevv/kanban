@@ -15,9 +15,9 @@ type CardsState = {
 };
 
 type RelocateCard = {
-  activeCard: Card
-  columnId: number
-}
+  activeCard: Card;
+  columnId: number;
+};
 
 type SwipeCards = {
   activeCard: Card;
@@ -71,26 +71,31 @@ const cardsSlice = createSlice({
         if (index === overCardIndex) {
           return { ...activeCard, columnId: overCard.columnId };
         }
-        return card
+        return card;
       });
     },
 
-    relocateCard: (state, action: PayloadAction<RelocateCard>) => {      
-      console.log('card slice')
+    // swapCardsInDifferentColumn: (state, action) => {
 
+    // },
+
+    relocateCard: (state, action: PayloadAction<RelocateCard>) => {
       state.cards = state.cards.map((card) => {
         if (action.payload.activeCard.id === card.id) {
           return {
             ...card,
-            columnId: action.payload.columnId
-          }
+            columnId: action.payload.columnId,
+          };
         }
-        return card
-      })
-    }
+        return card;
+      });
+    },
+
+
   },
 });
 
-export const { addCard, changeTitle, swapCards, relocateCard } = cardsSlice.actions;
+export const { addCard, changeTitle, swapCards, relocateCard } =
+  cardsSlice.actions;
 
 export default cardsSlice.reducer;
