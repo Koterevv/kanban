@@ -1,3 +1,4 @@
+import { arrayMove } from "@dnd-kit/sortable";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -12,6 +13,11 @@ export interface Card extends PayloadCard {
 type CardsState = {
   cards: Card[];
 };
+
+type RelocateCard = {
+  activeCard: Card
+  columnId: number
+}
 
 type SwipeCards = {
   activeCard: Card;
@@ -51,7 +57,6 @@ const cardsSlice = createSlice({
 
     swapCards: (state, action: PayloadAction<SwipeCards>) => {
       const { activeCard, overCard } = action.payload;
-      console.log(activeCard, overCard)
       const activeCardIndex = state.cards.findIndex(
         (card) => card.id === activeCard.id
       );
@@ -69,9 +74,23 @@ const cardsSlice = createSlice({
         return card
       });
     },
+
+    relocateCard: (state, action: PayloadAction<RelocateCard>) => {      
+      console.log('card slice')
+
+      state.cards = state.cards.map((card) => {
+        if (action.payload.activeCard.id === card.id) {
+          return {
+            ...card,
+            columnId: action.payload.columnId
+          }
+        }
+        return card
+      })
+    }
   },
 });
 
-export const { addCard, changeTitle, swapCards } = cardsSlice.actions;
+export const { addCard, changeTitle, swapCards, relocateCard } = cardsSlice.actions;
 
 export default cardsSlice.reducer;

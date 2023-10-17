@@ -11,15 +11,18 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { SortableContext } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  horizontalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { FC, useMemo, useState } from "react";
 import { AddingColumn } from "./AddingColumn";
 import { ColumnItem } from "./ColumnItem";
 
 import type { RootState } from "@/store";
-import { Card, swapCards } from "@/store/features/cardsSlice";
-import { CardItem } from "./CardItem";
+import { Card, relocateCard, swapCards } from "@/store/features/cardsSlice";
 import { Column } from "@/store/features/types/types";
+import { CardItem } from "./CardItem";
 
 export const KanbanBoard: FC = () => {
   const columns = useAppSelector((state: RootState) => state.columns.columns);
@@ -34,8 +37,6 @@ export const KanbanBoard: FC = () => {
   }, [columns]);
 
   const onDragStart = (e: DragStartEvent): void => {
-    console.log("start");
-
     if (e.active.data.current?.type === "column") {
       setActiveColumn(e.active.data.current.column);
       return;
@@ -48,26 +49,38 @@ export const KanbanBoard: FC = () => {
 
   const onDragOver = (e: DragOverEvent): void => {
     const { active, over } = e;
-    console.log("over");
 
     if (!over) return;
 
     const activeId = active.id;
     const overId = over.id;
 
-    if (activeId === overId) return;
+    if (active.data.current?.type && over.data.current?.type) {
+      if (activeId === overId) return;
 
-    const isActiveCard = active.data.current?.type === "card";
-    const isOverCard = over.data.current?.type === "card";
+      const activeType = active.data.current.type;
+      const overType = over.data.current.type;
 
-    if (isActiveCard && isOverCard) {
-      if (
-        typeof active.data.current !== "undefined" &&
-        typeof over.data.current !== "undefined"
-      ) {
+      // console.log("over", activeType, overType);
+
+      if (activeType === "card") {
         const activeCard = active.data.current.card;
-        const overCard = over.data.current.card;
-        dispatch(swapCards({ activeCard, overCard }));
+
+        if (overType === "card") {
+          const overCard = over.data.current.card;
+          console.log("over card and card", activeCard, overCard);
+          dispatch(swapCards({ activeCard, overCard }));
+        }
+
+        if (overType === "column") {
+          const columnId = over.data.current.column.id;
+          console.log(
+            "over card and column",
+            activeCard,
+            over.data.current.column
+          );
+          dispatch(relocateCard({ activeCard, columnId }));
+        }
       }
     }
   };
@@ -75,8 +88,6 @@ export const KanbanBoard: FC = () => {
   const onDragEnd = (e: DragEndEvent): void => {
     setActiveColumn(null);
     setActiveCard(null);
-    console.log("end");
-
     const { active, over } = e;
 
     if (!over) return;
@@ -86,22 +97,15 @@ export const KanbanBoard: FC = () => {
 
     if (activeId === overId) return;
 
-    if (active.data.current?.type === "column") {
+    if (
+      active.data.current?.type === "column" &&
+      over.data.current?.type === "column"
+    ) {
+      console.log("end", active, over);
       const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
       const overColumnIndex = columns.findIndex((col) => col.id === overId);
 
       dispatch(swapColumns({ activeColumnIndex, overColumnIndex }));
-    }
-
-    if (active.data.current?.type === "card") {
-      if (
-        typeof active.data.current !== "undefined" &&
-        typeof over.data.current !== "undefined"
-      ) {
-        const activeCard = active.data.current.card;
-        const overCard = over.data.current.card;
-        dispatch(swapCards({ activeCard, overCard }));
-      }
     }
   };
 
@@ -121,8 +125,11 @@ export const KanbanBoard: FC = () => {
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
       >
-        <SortableContext items={columnsIds}>
-          <ul className="flex gap-7">
+        <SortableContext
+          items={columnsIds}
+          strategy={horizontalListSortingStrategy}
+        >
+          <ul className="flex gap-4">
             {columns?.map((column) => {
               return (
                 <ColumnItem
