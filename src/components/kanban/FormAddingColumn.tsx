@@ -16,7 +16,7 @@ export const FormAddingColumn: React.FC<FormAddingColumnType> = ({
 
   return (
     <form
-      className="p-1 bg-deep-indigo/90 rounded-xl"
+      className="bg-[#231736] rounded-xl p-3"
       onSubmit={(e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
         const isExist = columns.some((column) => column.title === columnTitle);
@@ -27,7 +27,7 @@ export const FormAddingColumn: React.FC<FormAddingColumnType> = ({
         }
       }}
     >
-      <div className="p-2">
+      <div className="mb-6">
         <input
           autoFocus={true}
           className="p-2 cursor-pointer bg-transparent rounded-lg w-full"

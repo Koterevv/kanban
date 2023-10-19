@@ -6,7 +6,7 @@ type ColumnsState = {
   columns: Column[];
 };
 
-type SwapColumns = { activeColumnIndex: number; overColumnIndex: number };
+type SwapColumns = { activeColumn: Column; overColumn: Column };
 
 const initialState: ColumnsState = {
   columns: [],
@@ -44,12 +44,12 @@ const columnsSlice = createSlice({
     },
 
     swapColumns: (state, action: PayloadAction<SwapColumns>) => {
-      const { activeColumnIndex, overColumnIndex } = action.payload;
-      const dragColumn = state.columns[activeColumnIndex];
-      const overColumn = state.columns[overColumnIndex];
+      const { activeColumn, overColumn } = action.payload;
+      const activeColumnIndex = state.columns.findIndex((column) => column.id === activeColumn.id);
+      const overColumnIndex = state.columns.findIndex((column) => column.id === overColumn.id);
       state.columns = state.columns.map((board, index) => {
         if (index === overColumnIndex) {
-          return dragColumn;
+          return activeColumn;
         }
         if (index === activeColumnIndex) {
           return overColumn;

@@ -42,26 +42,15 @@ export const ColumnItem: FC<ColumnItemProps> = ({
     transition,
   };
 
-  // if (isDragging) {
-  //   return (
-  //     <li
-  //       ref={setNodeRef}
-  //       style={style}
-  //       className="w-64 p-2 bg-black rounded-xl opacity-60 border border-rose-500 mr-10"
-  //     ></li>
-  //   );
-  // }
-
   return (
     <li
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
-      className={isDragging ? "column opacity-60" : "column"}
-      // className="w-64 bg-gray-900 rounded-xl h-96 p-2 cursor-auto"
+      className={isDragging ? "column opacity-60 border border-[#A6A6ED]" : "column"}
     >
-      <div className="p-2">
+      <div className="p-3">
         <input
           className="p-2 bg-transparent rounded-lg w-full"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,9 +60,9 @@ export const ColumnItem: FC<ColumnItemProps> = ({
           value={column.title}
         />
       </div>
-
+      
       <CardList columnId={column.id} cards={cards} activeCard={activeCard} />
-      <AddingCard columnId={column.id} />
+      <AddingCard columnId={column.id} isDragging={isDragging} />
     </li>
   );
 };

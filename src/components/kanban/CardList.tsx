@@ -15,13 +15,17 @@ export const CardList: FC<CardListProps> = ({ columnId, cards }) => {
   }, [cards]);
 
   return (
-    <div className="px-2">
-      <SortableContext items={cardsIds}>
-        {cards?.map((card) => {
-          if (card.columnId === columnId)
-            return <CardItem key={card.id} card={card} />;
-        })}
-      </SortableContext>
-    </div>
+    <>
+      {!cards.length ? null : (
+        <div className="overflow-auto grow overflow-x-hidden px-3">
+          <SortableContext items={cardsIds}>
+            {cards?.map((card) => {
+              if (card.columnId === columnId)
+                return <CardItem key={card.id} card={card} />;
+            })}
+          </SortableContext>
+        </div>
+      )}
+    </>
   );
 };
