@@ -11,7 +11,7 @@ export const LinkItem = ({link, children, icon}:Props) => {
   const Icon = icon
 
   return (
-    <Link className='flex items-center gap-2 hover:bg-white/20 p-2 rounded-lg w-max' href={link}>
+    <Link className='flex items-center gap-2 hover:bg-white/20 p-2 rounded-lg w-max transition-colors duration-200' href={link}>
       <Icon/>
       {children}
     </Link>

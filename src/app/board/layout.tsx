@@ -12,7 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section id="kanban-board" className="grow bg-gradient-to-br from-indigo from-20% to-light-purple to-100% p-5">
+    <section
+      className="grow bg-gradient-to-br from-indigo from-20% to-light-purple 
+      to-100% w-[calc(100wh-144px)] overflow-x-scroll"
+    >
       <Providers>{children}</Providers>
     </section>
   );

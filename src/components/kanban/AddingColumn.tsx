@@ -15,7 +15,7 @@ export const AddingColumn: FC = () => {
   };
 
   return (
-    <li className="w-64">
+    <li className="w-64 shrink-0">
       {isAdding ? (
         <FormAddingColumn changeAddingState={changeAddingState} />
       ) : (

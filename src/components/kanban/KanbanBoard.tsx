@@ -48,28 +48,6 @@ export const KanbanBoard: FC = () => {
     }
   };
 
-  // const onDragOver = (e: DragOverEvent): void => {
-  //   const { active, over } = e;
-  //   if (!over) return;
-
-  //   if (active.id === over.id) return;
-
-  //   if (
-  //     active.data.current?.type !== "undefined" &&
-  //     over.data.current?.type !== "undefined"
-  //   ) {
-  //     if (
-  //       active.data.current?.type === "card" &&
-  //       over.data.current?.type === "card"
-  //     ) {
-  //       console.log('over')
-  //       const activeCard = active.data.current.card;
-  //       const overCard = over.data.current.card;
-  //       dispatch(swapCards({ activeCard, overCard }));
-  //     }
-  //   }
-  // }
-
   const onDragMove = (e: DragMoveEvent): void => {
     const { active, over } = e;
     if (!over) return;
@@ -139,13 +117,12 @@ export const KanbanBoard: FC = () => {
   );
 
   return (
-    <div className="">
+    <div className="p-5">
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
         onDragMove={onDragMove}
         onDragEnd={onDragEnd}
-        // onDragOver={onDragOver}
       >
         <SortableContext
           items={columnsIds}
