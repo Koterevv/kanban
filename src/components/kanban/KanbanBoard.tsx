@@ -5,12 +5,11 @@ import {
   DndContext,
   DragEndEvent,
   DragMoveEvent,
-  DragOverEvent,
   DragOverlay,
   DragStartEvent,
   PointerSensor,
   useSensor,
-  useSensors,
+  useSensors
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -28,6 +27,7 @@ import { CardItem } from "./CardItem";
 export const KanbanBoard: FC = () => {
   const columns = useAppSelector((state: RootState) => state.columns.columns);
   const cards = useAppSelector((state: RootState) => state.cards.cards);
+  const isDisabled = useAppSelector((state) => state.dnd.isDisable)
   const dispatch = useAppDispatch();
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
@@ -127,6 +127,7 @@ export const KanbanBoard: FC = () => {
         <SortableContext
           items={columnsIds}
           strategy={horizontalListSortingStrategy}
+          disabled={isDisabled}
         >
           <ul className="flex gap-10">
             {columns?.map((column) => {

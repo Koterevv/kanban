@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import columns from './features/columnsSlice'
 import cards from './features/cardsSlice'
+import dnd from './features/dndSlice'
 
 export const store = configureStore({
   reducer: {
     columns,
     cards,
+    dnd,
   },
 })
 

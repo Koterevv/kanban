@@ -9,7 +9,7 @@ interface PayloadCard {
 }
 export interface Card extends PayloadCard {
   id: number;
-  prevIndex: number | null
+  description: string
 }
 
 type CardsState = {
@@ -26,6 +26,15 @@ type SwipeCards = {
   overCard: Card;
 };
 
+type ChangeTitleType = {
+  title: string
+  id: number
+}
+type ChangeDescriptionType = {
+  description: string
+  id: number
+}
+
 const initialState: CardsState = {
   cards: [],
 };
@@ -41,17 +50,28 @@ const cardsSlice = createSlice({
           id: Date.now(),
           title: action.payload.title,
           columnId: action.payload.columnId,
-          prevIndex: null
+          description: ''
         },
       ];
     },
 
-    changeTitle: (state, action: PayloadAction<Card>) => {
+    changeTitle: (state, action: PayloadAction<ChangeTitleType>) => {
       state.cards = state.cards.map((card) => {
         if (action.payload.id === card.id) {
           return {
             ...card,
             title: action.payload.title,
+          };
+        }
+        return card;
+      });
+    },
+    changeDescription: (state, action: PayloadAction<ChangeDescriptionType>) => {
+      state.cards = state.cards.map((card) => {
+        if (action.payload.id === card.id) {
+          return {
+            ...card,
+            description: action.payload.description,
           };
         }
         return card;
@@ -96,7 +116,7 @@ const cardsSlice = createSlice({
   },
 });
 
-export const { addCard, changeTitle, swapCards,relocateCardToColWithCards, relocateCard } =
+export const { addCard, changeTitle, swapCards,relocateCardToColWithCards, relocateCard, changeDescription } =
   cardsSlice.actions;
 
 export default cardsSlice.reducer;
